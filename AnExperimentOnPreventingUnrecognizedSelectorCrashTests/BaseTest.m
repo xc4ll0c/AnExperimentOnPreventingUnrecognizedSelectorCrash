@@ -1,13 +1,11 @@
 //
-//  ProtectionTypeResolveInstanceMethodTest.m
+//  BaseTest.m
 //  AnExperimentOnPreventingUnrecognizedSelectorCrashTests
 //
 //  Created by Wenzheng Zhang on 2017/12/13.
 //  Copyright © 2017年 Wenzheng Zhang. All rights reserved.
 //
-
-#import <XCTest/XCTest.h>
-#import "ZWZCrashPreventor.h"
+#import "BaseTest.h"
 
 struct SimpleStruct {
     NSInteger i;
@@ -18,7 +16,7 @@ typedef struct SimpleStruct SimpleStruct;
 
 #pragma mark - TestObject
 @interface TestObject : NSObject
-- (void)voidMethod; 
+- (void)voidMethod;
 - (id)methodReturnsAnObject;
 - (NSInteger)methodReturnsABasicValue;
 - (SimpleStruct)methodReturnsAStruct;
@@ -29,23 +27,37 @@ typedef struct SimpleStruct SimpleStruct;
 @implementation TestObject
 @end
 
-@interface ProtectionTypeResolveInstanceMethodTest : XCTestCase
-
-@end
-
-@implementation ProtectionTypeResolveInstanceMethodTest
-
-- (void)setUp {
-    [super setUp];
-    [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeForwardingTarget];
-}
-
-- (void)tearDown {
-    [super tearDown];
+@implementation BaseTest
+- (void)testThatProtectionTypeResolveInstanceMethodCanPreventCrash {
+    [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeResolveInstanceMethod];
+    [self runAllCase];
     [[ZWZCrashPreventor sharedInstance] stopProtection];
 }
 
-- (void)testThatItCanProtectVoidMethod {
+- (void)testThatProtectionTypeForwardingTargetCanPreventCrash {
+    [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeForwardingTarget];
+    [self runAllCase];
+    [[ZWZCrashPreventor sharedInstance] stopProtection];
+}
+
+- (void)testThatProtectionTypeForwardInvocationCanPreventCrash {
+    [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeForwardInvocation];
+    [self runAllCase];
+    [[ZWZCrashPreventor sharedInstance] stopProtection];
+}
+
+- (void)runAllCase {
+    [self p_testThatItCanProtectVoidMethod];
+    [self p_testThatItCanProtectMethodReturnsAnObject];
+    [self p_testThatItCanMethodReturnsABasicValue];
+    [self p_testThatItCanProtectMethodReturnsAStruct];
+    [self p_testThatItCanProtectMethodReturnsAnObjectWithP1];
+    
+    // 这个方法会崩溃
+//    [self p_testThatItCanProtectMethodReturnsACGRect];
+}
+
+- (void)p_testThatItCanProtectVoidMethod {
     TestObject *tObject = [[TestObject alloc] init];
     @try {
         [tObject voidMethod];
@@ -55,9 +67,8 @@ typedef struct SimpleStruct SimpleStruct;
     }
 }
 
-- (void)testThatItCanProtectMethodReturnsAnObject {
+- (void)p_testThatItCanProtectMethodReturnsAnObject {
     TestObject *tObject = [[TestObject alloc] init];
-    
     @try {
         id object = [tObject methodReturnsAnObject];
         NSLog(@"%@", object);
@@ -67,9 +78,8 @@ typedef struct SimpleStruct SimpleStruct;
     }
 }
 
-- (void)testThatItCanMethodReturnsABasicValue {
+- (void)p_testThatItCanMethodReturnsABasicValue {
     TestObject *tObject = [[TestObject alloc] init];
-    
     @try {
         NSInteger i = [tObject methodReturnsABasicValue];
         NSLog(@"%@", @(i));
@@ -79,10 +89,8 @@ typedef struct SimpleStruct SimpleStruct;
     }
 }
 
-- (void)testThatItCanProtectMethodReturnsAStruct {
-    
+- (void)p_testThatItCanProtectMethodReturnsAStruct {
     TestObject *tObject = [[TestObject alloc] init];
-    
     @try {
         SimpleStruct aStruct = [tObject methodReturnsAStruct];
         NSLog(@"%@", @(aStruct.i));
@@ -92,8 +100,7 @@ typedef struct SimpleStruct SimpleStruct;
     }
 }
 
-- (void)testThatItCanProtectMethodReturnsAnObjectWithP1 {
-    
+- (void)p_testThatItCanProtectMethodReturnsAnObjectWithP1 {
     TestObject *tObject = [[TestObject alloc] init];
     @try {
         id object = [tObject methodReturnsAnObjectWithP1:[[NSObject alloc] init]
@@ -106,9 +113,8 @@ typedef struct SimpleStruct SimpleStruct;
 }
 
 // 这会崩溃
-- (void)disable_testThatItCanProtectMethodReturnsACGRect {
+- (void)p_testThatItCanProtectMethodReturnsACGRect {
     TestObject *tObject = [[TestObject alloc] init];
-    
     @try {
         CGRect aStruct = [tObject methodReturnsACGRect];
         NSLog(@"%@", @(aStruct.origin.x));

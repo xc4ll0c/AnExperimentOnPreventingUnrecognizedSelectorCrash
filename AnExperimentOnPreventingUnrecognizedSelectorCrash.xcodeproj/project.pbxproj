@@ -19,7 +19,7 @@
 		3AED04C31FE1184A003130A3 /* NSObject+TypeForwardingTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C21FE1184A003130A3 /* NSObject+TypeForwardingTarget.m */; };
 		3AED04C61FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C51FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m */; };
 		3AED04C91FE1331F003130A3 /* CPThreadSafeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C81FE1331F003130A3 /* CPThreadSafeSet.m */; };
-		3AED04CB1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04CA1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m */; };
+		3AED04CD1FE1572A003130A3 /* BaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04CC1FE1572A003130A3 /* BaseTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +57,8 @@
 		3AED04C51FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TypeForwardInvocation.m"; sourceTree = "<group>"; };
 		3AED04C71FE1331F003130A3 /* CPThreadSafeSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPThreadSafeSet.h; sourceTree = "<group>"; };
 		3AED04C81FE1331F003130A3 /* CPThreadSafeSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPThreadSafeSet.m; sourceTree = "<group>"; };
-		3AED04CA1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProtectionTypeResolveInstanceMethodTest.m; sourceTree = "<group>"; };
+		3AED04CC1FE1572A003130A3 /* BaseTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTest.m; sourceTree = "<group>"; };
+		3AED04CE1FE15739003130A3 /* BaseTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +117,8 @@
 		3AED04A91FE1026C003130A3 /* AnExperimentOnPreventingUnrecognizedSelectorCrashTests */ = {
 			isa = PBXGroup;
 			children = (
-				3AED04CA1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m */,
+				3AED04CE1FE15739003130A3 /* BaseTest.h */,
+				3AED04CC1FE1572A003130A3 /* BaseTest.m */,
 				3AED04AC1FE1026C003130A3 /* Info.plist */,
 			);
 			path = AnExperimentOnPreventingUnrecognizedSelectorCrashTests;
@@ -259,7 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AED04CB1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m in Sources */,
+				3AED04CD1FE1572A003130A3 /* BaseTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
