@@ -52,7 +52,7 @@ void _tfi_unrecognized_default_imp_(id self, SEL sel) {
 - (NSMethodSignature *)TFI_methodSignatureForSelector:(SEL)aSelector {
     NSMethodSignature *sig = [self TFI_methodSignatureForSelector:aSelector];
     if (!sig) {
-        // 标记原来的类是否实现了转发且返回一个sig
+        // 标记原来的类未针对aSelector实现转发，返回一个默认的sig
         CPThreadSafeSet *set = [self TFI_unrecognizedSelectorCacheSet];
         if (!set) {
             set = [[CPThreadSafeSet alloc] init];

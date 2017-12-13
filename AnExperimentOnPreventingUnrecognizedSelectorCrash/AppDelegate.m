@@ -7,12 +7,17 @@
 //
 
 #import "AppDelegate.h"
+#import "ZWZCrashPreventor.h"
 
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
+
++ (void)load {
+    [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeForwardInvocation];
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
