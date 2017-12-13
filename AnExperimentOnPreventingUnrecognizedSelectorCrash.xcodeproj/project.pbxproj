@@ -13,12 +13,13 @@
 		3AED049B1FE1026C003130A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AED049A1FE1026C003130A3 /* Assets.xcassets */; };
 		3AED049E1FE1026C003130A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AED049C1FE1026C003130A3 /* LaunchScreen.storyboard */; };
 		3AED04A11FE1026C003130A3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04A01FE1026C003130A3 /* main.m */; };
-		3AED04AB1FE1026C003130A3 /* AnExperimentOnPreventingUnrecognizedSelectorCrashTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04AA1FE1026C003130A3 /* AnExperimentOnPreventingUnrecognizedSelectorCrashTests.m */; };
 		3AED04B91FE10893003130A3 /* NSObject+RuntimeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04B81FE10893003130A3 /* NSObject+RuntimeAdditions.m */; };
 		3AED04BC1FE10910003130A3 /* ZWZCrashPreventor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04BB1FE10910003130A3 /* ZWZCrashPreventor.m */; };
 		3AED04C01FE11341003130A3 /* NSObject+TypeResolveInstanceMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04BF1FE11341003130A3 /* NSObject+TypeResolveInstanceMethod.m */; };
 		3AED04C31FE1184A003130A3 /* NSObject+TypeForwardingTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C21FE1184A003130A3 /* NSObject+TypeForwardingTarget.m */; };
 		3AED04C61FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C51FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m */; };
+		3AED04C91FE1331F003130A3 /* CPThreadSafeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C81FE1331F003130A3 /* CPThreadSafeSet.m */; };
+		3AED04CB1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04CA1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +44,6 @@
 		3AED049F1FE1026C003130A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AED04A01FE1026C003130A3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3AED04A61FE1026C003130A3 /* AnExperimentOnPreventingUnrecognizedSelectorCrashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnExperimentOnPreventingUnrecognizedSelectorCrashTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AED04AA1FE1026C003130A3 /* AnExperimentOnPreventingUnrecognizedSelectorCrashTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnExperimentOnPreventingUnrecognizedSelectorCrashTests.m; sourceTree = "<group>"; };
 		3AED04AC1FE1026C003130A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AED04B71FE10893003130A3 /* NSObject+RuntimeAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+RuntimeAdditions.h"; sourceTree = "<group>"; };
 		3AED04B81FE10893003130A3 /* NSObject+RuntimeAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+RuntimeAdditions.m"; sourceTree = "<group>"; };
@@ -55,6 +55,9 @@
 		3AED04C21FE1184A003130A3 /* NSObject+TypeForwardingTarget.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TypeForwardingTarget.m"; sourceTree = "<group>"; };
 		3AED04C41FE11CEB003130A3 /* NSObject+TypeForwardInvocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+TypeForwardInvocation.h"; sourceTree = "<group>"; };
 		3AED04C51FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TypeForwardInvocation.m"; sourceTree = "<group>"; };
+		3AED04C71FE1331F003130A3 /* CPThreadSafeSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPThreadSafeSet.h; sourceTree = "<group>"; };
+		3AED04C81FE1331F003130A3 /* CPThreadSafeSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPThreadSafeSet.m; sourceTree = "<group>"; };
+		3AED04CA1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProtectionTypeResolveInstanceMethodTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +116,7 @@
 		3AED04A91FE1026C003130A3 /* AnExperimentOnPreventingUnrecognizedSelectorCrashTests */ = {
 			isa = PBXGroup;
 			children = (
-				3AED04AA1FE1026C003130A3 /* AnExperimentOnPreventingUnrecognizedSelectorCrashTests.m */,
+				3AED04CA1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m */,
 				3AED04AC1FE1026C003130A3 /* Info.plist */,
 			);
 			path = AnExperimentOnPreventingUnrecognizedSelectorCrashTests;
@@ -122,6 +125,8 @@
 		3AED04B61FE102CA003130A3 /* CrashPreventor */ = {
 			isa = PBXGroup;
 			children = (
+				3AED04C71FE1331F003130A3 /* CPThreadSafeSet.h */,
+				3AED04C81FE1331F003130A3 /* CPThreadSafeSet.m */,
 				3AED04B71FE10893003130A3 /* NSObject+RuntimeAdditions.h */,
 				3AED04B81FE10893003130A3 /* NSObject+RuntimeAdditions.m */,
 				3AED04BE1FE11341003130A3 /* NSObject+TypeResolveInstanceMethod.h */,
@@ -243,6 +248,7 @@
 				3AED04961FE1026C003130A3 /* ViewController.m in Sources */,
 				3AED04C01FE11341003130A3 /* NSObject+TypeResolveInstanceMethod.m in Sources */,
 				3AED04A11FE1026C003130A3 /* main.m in Sources */,
+				3AED04C91FE1331F003130A3 /* CPThreadSafeSet.m in Sources */,
 				3AED04931FE1026C003130A3 /* AppDelegate.m in Sources */,
 				3AED04C61FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m in Sources */,
 				3AED04BC1FE10910003130A3 /* ZWZCrashPreventor.m in Sources */,
@@ -253,7 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AED04AB1FE1026C003130A3 /* AnExperimentOnPreventingUnrecognizedSelectorCrashTests.m in Sources */,
+				3AED04CB1FE138C5003130A3 /* ProtectionTypeResolveInstanceMethodTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

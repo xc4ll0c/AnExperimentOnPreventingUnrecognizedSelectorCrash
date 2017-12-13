@@ -9,6 +9,7 @@
 #import "NSObject+TypeForwardInvocation.h"
 #import "NSObject+RuntimeAdditions.h"
 #import <objc/runtime.h>
+#import "CPThreadSafeSet.h"
 
 
 void _tfi_unrecognized_default_imp_(id self, SEL sel) {
@@ -21,40 +22,6 @@ void _tfi_unrecognized_default_imp_(id self, SEL sel) {
 
 @implementation _TFI_ForwradingClass
 - (void)dummyMethod {
-}
-@end
-
-#pragma mark - _TFI_Set
-@interface _TFI_Set : NSObject
-@property (nonatomic, strong) NSLock *lock;
-@property (nonatomic, strong) NSMutableSet *set;
-
-- (void)addObject:(NSString *)object;
-- (BOOL)containsObject:(NSString *)anObject;
-@end
-
-@implementation _TFI_Set
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _lock = [[NSLock alloc] init];
-        _set = [[NSMutableSet alloc] init];
-    }
-    return self;
-}
-
-- (void)addObject:(NSString *)object {
-    [_lock lock];
-    [_set addObject:object];
-    [_lock unlock];
-}
-
-- (BOOL)containsObject:(NSString *)anObject {
-    BOOL ret = false;
-    [_lock lock];
-    ret = [_set containsObject:anObject];
-    [_lock unlock];
-    return ret;
 }
 @end
 
@@ -86,9 +53,9 @@ void _tfi_unrecognized_default_imp_(id self, SEL sel) {
     NSMethodSignature *sig = [self TFI_methodSignatureForSelector:aSelector];
     if (!sig) {
         // 标记原来的类是否实现了转发且返回一个sig
-        _TFI_Set *set = [self TFI_unrecognizedSelectorCacheSet];
+        CPThreadSafeSet *set = [self TFI_unrecognizedSelectorCacheSet];
         if (!set) {
-            set = [[_TFI_Set alloc] init];
+            set = [[CPThreadSafeSet alloc] init];
             [self TFI_setUnrecognizedSelectorCacheSet:set];
         }
         [set addObject:NSStringFromSelector(aSelector)];
@@ -102,7 +69,7 @@ void _tfi_unrecognized_default_imp_(id self, SEL sel) {
     SEL aSelector = [anInvocation selector];
     
     // 判断原来的类中是否实现了转发
-    _TFI_Set *set = [self TFI_unrecognizedSelectorCacheSet];
+    CPThreadSafeSet *set = [self TFI_unrecognizedSelectorCacheSet];
     if (![set containsObject:NSStringFromSelector(aSelector)]) {
         [self TFI_forwardInvocation:anInvocation];
     } else {
@@ -114,7 +81,7 @@ void _tfi_unrecognized_default_imp_(id self, SEL sel) {
 
 
 #pragma mark -  Getter & Setter
-- (void)TFI_setUnrecognizedSelectorCacheSet:(_TFI_Set *)set {
+- (void)TFI_setUnrecognizedSelectorCacheSet:(CPThreadSafeSet *)set {
     objc_setAssociatedObject(self, @selector(TFI_unrecognizedSelectorCacheSet), set, OBJC_ASSOCIATION_RETAIN);
 }
 
