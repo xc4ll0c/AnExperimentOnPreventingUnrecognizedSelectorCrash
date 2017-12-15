@@ -11,4 +11,6 @@
 @interface NSObject (RuntimeAdditions)
 + (void)ra_swizzleClassMethodWithOriginalSEL:(SEL)originalSEL swizzledSEL:(SEL)swizzledSEL;
 + (void)ra_swizzleInstanceMethodWithOriginalSEL:(SEL)originalSEL swizzledSEL:(SEL)swizzledSEL;
+
++ (BOOL)ra_isMethodOveridedNSObjectImplementationForSelector:(SEL)aSelector isClassMethod:(BOOL)isClassMethod;
 @end

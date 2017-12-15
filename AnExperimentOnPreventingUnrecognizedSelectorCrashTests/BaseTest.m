@@ -13,7 +13,6 @@ struct SimpleStruct {
 
 typedef struct SimpleStruct SimpleStruct;
 
-
 #pragma mark - TestObject
 @interface TestObject : NSObject
 - (void)voidMethod;
@@ -28,37 +27,22 @@ typedef struct SimpleStruct SimpleStruct;
 @end
 
 @implementation BaseTest
-- (void)testThatProtectionTypeResolveInstanceMethodCanPreventCrash {
-    [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeResolveInstanceMethod];
-    [self runAllCase];
-    [[ZWZCrashPreventor sharedInstance] stopProtection];
-}
 
-- (void)testThatProtectionTypeForwardingTargetCanPreventCrash {
+- (void)setUp {
+    [super setUp];
     [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeForwardingTarget];
-    [self runAllCase];
+}
+
+- (void)tearDown {
+    [super tearDown];
     [[ZWZCrashPreventor sharedInstance] stopProtection];
 }
 
-- (void)testThatProtectionTypeForwardInvocationCanPreventCrash {
-    [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeForwardInvocation];
-    [self runAllCase];
-    [[ZWZCrashPreventor sharedInstance] stopProtection];
-}
-
-- (void)runAllCase {
-    [self p_testThatItCanProtectVoidMethod];
-    [self p_testThatItCanProtectMethodReturnsAnObject];
-    [self p_testThatItCanMethodReturnsABasicValue];
-    [self p_testThatItCanProtectMethodReturnsAStruct];
-    [self p_testThatItCanProtectMethodReturnsAnObjectWithP1];
-    
-    // 这个方法会崩溃
-//    [self p_testThatItCanProtectMethodReturnsACGRect];
-}
-
-- (void)p_testThatItCanProtectVoidMethod {
+- (void)testThatItCanProtectVoidMethod {
     TestObject *tObject = [[TestObject alloc] init];
+    
+    [tObject respondsToSelector:@selector(voidMethod)];
+    
     @try {
         [tObject voidMethod];
     } @catch (NSException *exception) {
@@ -67,7 +51,7 @@ typedef struct SimpleStruct SimpleStruct;
     }
 }
 
-- (void)p_testThatItCanProtectMethodReturnsAnObject {
+- (void)testThatItCanProtectMethodReturnsAnObject {
     TestObject *tObject = [[TestObject alloc] init];
     @try {
         id object = [tObject methodReturnsAnObject];
@@ -78,7 +62,7 @@ typedef struct SimpleStruct SimpleStruct;
     }
 }
 
-- (void)p_testThatItCanMethodReturnsABasicValue {
+- (void)testThatItCanMethodReturnsABasicValue {
     TestObject *tObject = [[TestObject alloc] init];
     @try {
         NSInteger i = [tObject methodReturnsABasicValue];
@@ -89,7 +73,7 @@ typedef struct SimpleStruct SimpleStruct;
     }
 }
 
-- (void)p_testThatItCanProtectMethodReturnsAStruct {
+- (void)testThatItCanProtectMethodReturnsAStruct {
     TestObject *tObject = [[TestObject alloc] init];
     @try {
         SimpleStruct aStruct = [tObject methodReturnsAStruct];
@@ -100,7 +84,7 @@ typedef struct SimpleStruct SimpleStruct;
     }
 }
 
-- (void)p_testThatItCanProtectMethodReturnsAnObjectWithP1 {
+- (void)testThatItCanProtectMethodReturnsAnObjectWithP1 {
     TestObject *tObject = [[TestObject alloc] init];
     @try {
         id object = [tObject methodReturnsAnObjectWithP1:[[NSObject alloc] init]
@@ -112,8 +96,12 @@ typedef struct SimpleStruct SimpleStruct;
     }
 }
 
-// 这会崩溃
-- (void)p_testThatItCanProtectMethodReturnsACGRect {
+
+- (void)testThatItCanProtectMethodReturnsACGRect {
+    // 这会崩溃，认为失败
+    XCTAssertTrue(false);
+    return;
+    
     TestObject *tObject = [[TestObject alloc] init];
     @try {
         CGRect aStruct = [tObject methodReturnsACGRect];
@@ -123,5 +111,4 @@ typedef struct SimpleStruct SimpleStruct;
         XCTAssertTrue(false);
     }
 }
-
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "MessageForwardingDemo.h"
 
 @interface ViewController ()
 - (void)aVoidMethod;
@@ -16,7 +17,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self aVoidMethod];
+    // 运行单元测试时请勿开启
+//    [self aVoidMethod];
+//    [self messageForwardingDemo];
+}
+
+- (void)messageForwardingDemo {
+    
+    AB *ab = [[AB alloc] init];
+    NSLog(@"AB responds to aMethod ? %@", [ab respondsToSelector:@selector(aMethod)] ? @"YES" : @"NO");
+    NSLog(@"AB responds to bMethod ? %@", [ab respondsToSelector:@selector(bMethod)] ? @"YES" : @"NO");
+    
+    NSLog(@"result of sending aMethod to AB: %@", [ab aMethod]);
+    NSLog(@"result of sending bMethod to AB: %@", [ab bMethod]);
+    NSLog(@"mark end");
 }
 
 

@@ -18,8 +18,9 @@
 		3AED04C01FE11341003130A3 /* NSObject+TypeResolveInstanceMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04BF1FE11341003130A3 /* NSObject+TypeResolveInstanceMethod.m */; };
 		3AED04C31FE1184A003130A3 /* NSObject+TypeForwardingTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C21FE1184A003130A3 /* NSObject+TypeForwardingTarget.m */; };
 		3AED04C61FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C51FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m */; };
-		3AED04C91FE1331F003130A3 /* CPThreadSafeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C81FE1331F003130A3 /* CPThreadSafeSet.m */; };
+		3AED04C91FE1331F003130A3 /* CPThreadSafeCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04C81FE1331F003130A3 /* CPThreadSafeCounter.m */; };
 		3AED04CD1FE1572A003130A3 /* BaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04CC1FE1572A003130A3 /* BaseTest.m */; };
+		3AED04D61FE2173D003130A3 /* MessageForwardingDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AED04D51FE2173D003130A3 /* MessageForwardingDemo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,10 +56,12 @@
 		3AED04C21FE1184A003130A3 /* NSObject+TypeForwardingTarget.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TypeForwardingTarget.m"; sourceTree = "<group>"; };
 		3AED04C41FE11CEB003130A3 /* NSObject+TypeForwardInvocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+TypeForwardInvocation.h"; sourceTree = "<group>"; };
 		3AED04C51FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TypeForwardInvocation.m"; sourceTree = "<group>"; };
-		3AED04C71FE1331F003130A3 /* CPThreadSafeSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPThreadSafeSet.h; sourceTree = "<group>"; };
-		3AED04C81FE1331F003130A3 /* CPThreadSafeSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPThreadSafeSet.m; sourceTree = "<group>"; };
+		3AED04C71FE1331F003130A3 /* CPThreadSafeCounter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPThreadSafeCounter.h; sourceTree = "<group>"; };
+		3AED04C81FE1331F003130A3 /* CPThreadSafeCounter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPThreadSafeCounter.m; sourceTree = "<group>"; };
 		3AED04CC1FE1572A003130A3 /* BaseTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTest.m; sourceTree = "<group>"; };
 		3AED04CE1FE15739003130A3 /* BaseTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTest.h; sourceTree = "<group>"; };
+		3AED04D41FE2173D003130A3 /* MessageForwardingDemo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageForwardingDemo.h; sourceTree = "<group>"; };
+		3AED04D51FE2173D003130A3 /* MessageForwardingDemo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageForwardingDemo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +103,7 @@
 		3AED04901FE1026C003130A3 /* AnExperimentOnPreventingUnrecognizedSelectorCrash */ = {
 			isa = PBXGroup;
 			children = (
+				3AED04D31FE2170C003130A3 /* MessageForwardingDemo */,
 				3AED04B61FE102CA003130A3 /* CrashPreventor */,
 				3AED04911FE1026C003130A3 /* AppDelegate.h */,
 				3AED04921FE1026C003130A3 /* AppDelegate.m */,
@@ -127,8 +131,8 @@
 		3AED04B61FE102CA003130A3 /* CrashPreventor */ = {
 			isa = PBXGroup;
 			children = (
-				3AED04C71FE1331F003130A3 /* CPThreadSafeSet.h */,
-				3AED04C81FE1331F003130A3 /* CPThreadSafeSet.m */,
+				3AED04C71FE1331F003130A3 /* CPThreadSafeCounter.h */,
+				3AED04C81FE1331F003130A3 /* CPThreadSafeCounter.m */,
 				3AED04B71FE10893003130A3 /* NSObject+RuntimeAdditions.h */,
 				3AED04B81FE10893003130A3 /* NSObject+RuntimeAdditions.m */,
 				3AED04BE1FE11341003130A3 /* NSObject+TypeResolveInstanceMethod.h */,
@@ -141,6 +145,15 @@
 				3AED04BB1FE10910003130A3 /* ZWZCrashPreventor.m */,
 			);
 			path = CrashPreventor;
+			sourceTree = "<group>";
+		};
+		3AED04D31FE2170C003130A3 /* MessageForwardingDemo */ = {
+			isa = PBXGroup;
+			children = (
+				3AED04D41FE2173D003130A3 /* MessageForwardingDemo.h */,
+				3AED04D51FE2173D003130A3 /* MessageForwardingDemo.m */,
+			);
+			path = MessageForwardingDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,7 +263,8 @@
 				3AED04961FE1026C003130A3 /* ViewController.m in Sources */,
 				3AED04C01FE11341003130A3 /* NSObject+TypeResolveInstanceMethod.m in Sources */,
 				3AED04A11FE1026C003130A3 /* main.m in Sources */,
-				3AED04C91FE1331F003130A3 /* CPThreadSafeSet.m in Sources */,
+				3AED04D61FE2173D003130A3 /* MessageForwardingDemo.m in Sources */,
+				3AED04C91FE1331F003130A3 /* CPThreadSafeCounter.m in Sources */,
 				3AED04931FE1026C003130A3 /* AppDelegate.m in Sources */,
 				3AED04C61FE11CEB003130A3 /* NSObject+TypeForwardInvocation.m in Sources */,
 				3AED04BC1FE10910003130A3 /* ZWZCrashPreventor.m in Sources */,

@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CPThreadSafeSet : NSObject
-- (void)addObject:(NSString *)object;
-- (BOOL)containsObject:(NSString *)anObject;
-- (void)removeObject:(NSString *)object;
+@interface CPThreadSafeCounter : NSObject
+- (void)addCountForObject:(NSString *)object;
+- (void)decreaseCountForObject:(NSString *)object;
+- (BOOL)isZeroCountForObject:(NSString *)anObject;
 @end

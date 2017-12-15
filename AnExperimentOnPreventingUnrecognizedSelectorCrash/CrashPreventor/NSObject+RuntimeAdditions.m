@@ -46,4 +46,23 @@
         class_replaceMethod(cls, swizzledSEL, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
     }
 }
+
++ (BOOL)ra_isMethodOveridedNSObjectImplementationForSelector:(SEL)aSelector isClassMethod:(BOOL)isClassMethod {
+    Method subclassMethod = nil;
+    Method nsojectMethod  = nil;
+    
+    if (isClassMethod) {
+        subclassMethod = class_getClassMethod([self class], aSelector);
+        nsojectMethod = class_getClassMethod([NSObject class], aSelector);
+    } else {
+        subclassMethod = class_getInstanceMethod([self class], aSelector);
+        nsojectMethod = class_getInstanceMethod([NSObject class], aSelector);
+    }
+    
+    
+    
+    IMP subclassImplementation = method_getImplementation(subclassMethod);
+    IMP nsojectImplementation = method_getImplementation(nsojectMethod);
+    return subclassImplementation != nsojectImplementation;
+}
 @end

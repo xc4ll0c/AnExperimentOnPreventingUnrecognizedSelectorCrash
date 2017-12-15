@@ -9,11 +9,11 @@
 #import "NSObject+TypeResolveInstanceMethod.h"
 #import "NSObject+RuntimeAdditions.h"
 #import <objc/runtime.h>
-#import "CPThreadSafeSet.h"
+#import "CPThreadSafeCounter.h"
 
 
-void _trim_unrecognized_default_imp_(id self, SEL sel) {
-    
+id _trim_unrecognized_default_imp_(id self, SEL sel) {
+    return nil;
 }
 
 #pragma mark - TypeResolveInstanceMethod
@@ -31,7 +31,6 @@ void _trim_unrecognized_default_imp_(id self, SEL sel) {
 }
 
 + (BOOL)TRIM_resolveInstanceMethod:(SEL)sel {
-    
     // methodSignatureForSelector: 在找不到方法现实时会调用resolveInstanceMethod：获取方法实现
     // 所以在resolveInstanceMethod：直接调用methodSignatureForSelector：会造成死循环调用
     // 是否进入了循环调用，返回NO，破除循环调用
@@ -41,6 +40,11 @@ void _trim_unrecognized_default_imp_(id self, SEL sel) {
     
     // 先判断类是否已经实现了resolveInstanceMethod转发流程
     BOOL isResolved = [self TRIM_resolveInstanceMethod:sel];
+    
+    // 若子类已经重写，避免干扰子类的流程，直接返回NSObject的实现
+    if ([[self class] ra_isMethodOveridedNSObjectImplementationForSelector:@selector(resolveInstanceMethod:) isClassMethod:YES]) {
+        return isResolved;
+    }
     
     // 判断类是否通过forwardingTargetForSelector:实现了转发流程
     if (!isResolved) {
@@ -74,30 +78,31 @@ void _trim_unrecognized_default_imp_(id self, SEL sel) {
     return aCache;
 }
 
-+ (CPThreadSafeSet *)TRIM_ClassSharedSet {
+#pragma mark - 信息标记
++ (CPThreadSafeCounter *)TRIM_ClassSharedcounter {
     NSCache *aCache = [self TRIM_SharedCache];
     NSString *key = NSStringFromClass(self);
-    CPThreadSafeSet *set = [aCache objectForKey:key];
-    if (!set) {
-        set = [[CPThreadSafeSet alloc] init];
-        [aCache setObject:set forKey:key];
+    CPThreadSafeCounter *counter = [aCache objectForKey:key];
+    if (!counter) {
+        counter = [[CPThreadSafeCounter alloc] init];
+        [aCache setObject:counter forKey:key];
     }
-    return set;
+    return counter;
 }
 
 + (BOOL)TRIM_isInRecusiveCallForSelector:(SEL)aSelector {
-    CPThreadSafeSet *set = [self TRIM_ClassSharedSet];
-    return [set containsObject:NSStringFromSelector(aSelector)];
+    CPThreadSafeCounter *counter = [self TRIM_ClassSharedcounter];
+    return ![counter isZeroCountForObject:NSStringFromSelector(aSelector)];
 }
 
 + (void)TRIM_markRecusiveCallStartForSelector:(SEL)aSelector {
-    CPThreadSafeSet *set = [self TRIM_ClassSharedSet];
-    [set addObject:NSStringFromSelector(aSelector)];
+    CPThreadSafeCounter *counter = [self TRIM_ClassSharedcounter];
+    [counter addCountForObject:NSStringFromSelector(aSelector)];
 }
 
 + (void)TRIM_unmarkRecusiveCallStartForSelector:(SEL)aSelector {
-    CPThreadSafeSet *set = [self TRIM_ClassSharedSet];
-    [set removeObject:NSStringFromSelector(aSelector)];
+    CPThreadSafeCounter *counter = [self TRIM_ClassSharedcounter];
+    [counter decreaseCountForObject:NSStringFromSelector(aSelector)];
 }
 
 

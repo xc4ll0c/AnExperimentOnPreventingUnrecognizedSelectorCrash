@@ -10,10 +10,16 @@
 #import "NSObject+RuntimeAdditions.h"
 #import <objc/runtime.h>
 
-char * const _kTFTForwardingTargetClassName = "_kTFTForwardingTargetClassName";
-
-void _tft_unrecognized_default_imp_(id self, SEL sel) {
+id _tft_unrecognized_default_imp_(id self, SEL sel) {
+    return nil;
 }
+
+#pragma mark - _TFT_ForwradingTargetClass
+@interface _TFT_ForwradingTargetClass : NSObject
+@end
+
+@implementation _TFT_ForwradingTargetClass
+@end
 
 @implementation NSObject (TypeForwardingTarget)
 + (void)TFT_startUnrecognizedSelectorProtection {
@@ -34,6 +40,11 @@ void _tft_unrecognized_default_imp_(id self, SEL sel) {
     // 检查此类是否通过forwardingTargetForSelector:实现消息转发
     id forwardingTarget = [self TFT_forwardingTargetForSelector:aSelector];
     
+    // 若子类已经重写，避免干扰子类的流程，直接返回NSObject的实现
+    if ([[self class] ra_isMethodOveridedNSObjectImplementationForSelector:@selector(forwardingTargetForSelector:) isClassMethod:NO]) {
+        return forwardingTarget;
+    }
+    
     // 检查此类是否通过forwardingTargetForSelector:实现了转发流程
     if (!forwardingTarget) {
         NSMethodSignature *sig = [self methodSignatureForSelector:aSelector];
@@ -51,14 +62,8 @@ void _tft_unrecognized_default_imp_(id self, SEL sel) {
 }
 
 - (id)TFT_instanceOfForwardingTargetClassWithSelector:(SEL)aSelector {
-    Class forwardingTargetClass = objc_getClass(_kTFTForwardingTargetClassName);
-    
-    if (!forwardingTargetClass) {
-        forwardingTargetClass = objc_allocateClassPair([NSObject class], _kTFTForwardingTargetClassName, sizeof([NSObject class]));
-        objc_registerClassPair(forwardingTargetClass);
-    }
-    
-    class_addMethod(forwardingTargetClass, aSelector, (IMP)_tft_unrecognized_default_imp_, "v@:");
+    Class forwardingTargetClass = [_TFT_ForwradingTargetClass class];
+    class_addMethod(forwardingTargetClass, aSelector, (IMP)_tft_unrecognized_default_imp_, "@@:");
     id instance = [[forwardingTargetClass alloc] init];
     return instance;
 }

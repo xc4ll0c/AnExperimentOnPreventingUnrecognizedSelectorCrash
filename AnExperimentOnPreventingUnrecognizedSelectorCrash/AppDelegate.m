@@ -8,6 +8,25 @@
 
 #import "AppDelegate.h"
 #import "ZWZCrashPreventor.h"
+#import <objc/runtime.h>
+
+// 动态的实现
+void _TestObject_dynamic_imp_(id self, SEL sel) {
+}
+
+@interface TestObject : NSObject
+- (void)aVoidMethod;
+@end
+
+@implementation TestObject
++ (BOOL)resolveInstanceMethod:(SEL)sel {
+    if (sel == @selector(aVoidMethod)) {
+        class_addMethod([self class], sel, (IMP)_TestObject_dynamic_imp_, "v@:");
+        return YES;
+    }
+    return [super resolveInstanceMethod:sel];
+}
+@end
 
 @interface AppDelegate ()
 
@@ -16,12 +35,13 @@
 @implementation AppDelegate
 
 + (void)load {
-    [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeForwardInvocation];
+    // 运行单元测试时请勿开启
+//    [[ZWZCrashPreventor sharedInstance] startProtectionWithType:ZWZCPPTypeForwardInvocation];
 }
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Override point for customization after application launch.    
     return YES;
 }
 
